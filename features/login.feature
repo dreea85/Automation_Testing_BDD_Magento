@@ -1,67 +1,38 @@
 Feature: Test the functionality of the login page
-
-  #Scenario 1: correct email + correct password
-  #Scenario 2: incorrect email + correct password
-  #Scenario 3: correct email + incorrect password
-  #Scenario 4: correct email + password None
-  #Scenario 5: email None + correct password
-  #Scenario 6: incorrect email + password None
-  #Scenario 7: email None + incorrect password
-  #Scenario 8: email None + password None
-  #Scenario 9: incorrect email + incorrect password
-
-  Scenario: Login Successful when using correct email and correct password
+  Background:
     Given I am on the testing board login page
+  Scenario: Login Successful when using correct email and correct password
     When I insert correct email and password
     And I click on the login button
-    Then I can login into the application and see user's account page
+    Then I can login into the application and see the user's account page
+    And the user logs out
 
-"""
-  Scenario: Login failed when using incorrect email and correct password
-    Given I am on the testing board login page
-    When I insert incorrect email and correct password
+  Scenario Outline: Check that we can not login into the application when providing incorrect credentials
+    When I insert email "<email>" and password "<password>"
     And I click on the login button
-    Then I am unable to login and the error message contains
+    Then the message "<error_message>" is displayed
+   Examples:
+     | email                      | password        | error_message
+     | anapecorinox@gmail.com     | Hailascoala123! | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.
+     | annapecorino4055@gmail.com | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.
+     | anapecorinox@gmail.com     | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.
 
-  Scenario: Login failed when using correct email and incorrect password
-    Given I am on the testing board login page
-    When I insert correct email and incorrect password
+  Scenario Outline: Check that we can not login into the application when providing incorrect credentials
+    When I insert email "<email>" and password "<password>"
     And I click on the login button
-    Then I am unable to login and the error message contains
+    Then the email field message "<short_error_message_pass>" is displayed
+   Examples:
+     | email                      | password        | short_error_message_pass
+     | annapecorino4055@gmail.com | None            |This is a required field.
+     | anapecorinox@gmail.com     | None            |This is a required field.
+     | None                       | None            |This is a required field.
 
-  Scenario: Login failed when using correct email and password None
-    Given I am on the testing board login page
-    When I insert correct email and password None
+  Scenario Outline: Check that we can not login into the application when providing incorrect credentials
+    When I insert email "<email>" and password "<password>"
     And I click on the login button
-    Then I am unable to login and the error message contains
-
-  Scenario: Login failed when using email None and correct password
-    Given I am on the testing board login page
-    When I insert email None and correct password
-    And I click on the login button
-    Then I am unable to login and the error message contains
-
-  Scenario: Login failed when using incorrect email and password None
-    Given I am on the testing board login page
-    When I insert incorrect email and password None
-    And I click on the login button
-    Then I am unable to login and the error message contains
-
-  Scenario: Login failed when using email None and incorrect password
-    Given I am on the testing board login page
-    When I insert email None and incorrect password
-    And I click on the login button
-    Then I am unable to login and the error message contains
-
-  Scenario: Login failed when using email None and password None
-    Given I am on the testing board login page
-    When I insert email None and password None
-    And I click on the login button
-    Then I am unable to login and the error message contains
-
-  Scenario: Login failed when using incorrect email and incorrect password
-    Given I am on the testing board login page
-    When I insert incorrect email and incorrect password
-    And I click on the login button
-    Then I am unable to login and the error message contains
-"""
+    Then the password field message "<short_error_message_email>" is displayed
+   Examples:
+     | email                      | password        | short_error_message_email
+     | None                       | Hailascoala123! |This is a required field.
+     | None                       | 123!            |This is a required field.
+     | None                       | None            |This is a required field.
