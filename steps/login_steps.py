@@ -28,14 +28,9 @@ def step_impl(context, email, password):
 def step_impl(context, error_message):
     context.login_obj.check_error_msg(error_message)
 
-
-@then('the email field message "{short_error_message_pass}" is displayed')
-def step_impl(context, short_error_message_email):
-    context.login_obj.check_short_error_msg_email(short_error_message_email)
-
-@then('the password field message "{short_error_message_email}" is displayed')
-def step_impl(context, short_error_message_pass):
-    context.login_obj.check_short_error_msg_pass(short_error_message_pass)
+@then('a short message "{error_message_short}" is displayed')
+def step_impl(context, error_message_short):
+    context.login_obj.check_error_msg_short(error_message_short)
 
 @then("the user logs out")
 def step_impl(context):
