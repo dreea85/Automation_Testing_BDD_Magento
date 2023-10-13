@@ -6,7 +6,7 @@ class BasePage(Browser):
     def find(self, locator):
         return self.browser.find_element(*locator)
 
-    def type(self,locator, text):
+    def type(self, locator, text):
         self.find(locator).send_keys(text)
 
     def click(self, locator):

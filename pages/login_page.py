@@ -1,5 +1,7 @@
-from selenium.webdriver.common.by import By
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from base_page import BasePage
 
 
@@ -7,7 +9,7 @@ class LoginPage(BasePage):
     INPUT_EMAIL = (By.NAME, "login[username]")
     INPUT_PASSWORD = (By.NAME, "login[password]")
     BUTTON_LOGIN = (By.CSS_SELECTOR, "fieldset>div>div>button>span")
-    ERROR_MESSAGE = (By.CSS_SELECTOR,'div[data-bind="html: $parent.prepareMessageForHtml(message.text)"]')
+    ERROR_MESSAGE = (By.CSS_SELECTOR, 'div[data-bind="html: $parent.prepareMessageForHtml(message.text)"]')
     ERROR_MESSAGE_SHORT = (By.XPATH, '//div[contains(text(),"This is a required field.")]')
     DROPDOWN = (By.XPATH, '(//button[@data-action="customer-menu-toggle"])[1]')
     LOGOUT_BUTTON = (By.XPATH, '(// a[contains(text(), "Sign Out")])[1]')
@@ -27,9 +29,9 @@ class LoginPage(BasePage):
         password = self.find(self.INPUT_PASSWORD)
         password.send_keys("Hailascoala123!")
 
-    def set_wrong_password(self):
-        password = self.find(self.INPUT_PASSWORD)
-        password.send_keys("123!")
+    # def set_wrong_password(self):
+    #     password = self.find(self.INPUT_PASSWORD)
+    #     password.send_keys("123!")
 
     def click_login_button(self):
         self.find(self.BUTTON_LOGIN).click()
@@ -47,6 +49,10 @@ class LoginPage(BasePage):
             password_element.send_keys(password)
 
     def check_error_msg(self, error_message):
+        WebDriverWait(self.browser, 7).until(
+            EC.visibility_of_element_located(self.ERROR_MESSAGE)
+        )
+
         expected_error = error_message
         actual_error = self.find(self.ERROR_MESSAGE).text
         print(f"Expected_error: {expected_error}")

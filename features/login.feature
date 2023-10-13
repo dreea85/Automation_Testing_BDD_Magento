@@ -12,10 +12,10 @@ Feature: Test the functionality of the login page
     And I click on the login button
     Then the message "<error_message>" is displayed
   Examples:
-    | email                      | password        | error_message                                                                                               |
-    | anapecorinox@gmail.com     | Hailascoala123! | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later. |
-    | annapecorino4055@gmail.com | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later. |
-    | anapecorinox@gmail.com     | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later. |
+    | email                      | password        | error_message                                                                                              |
+    | anapecorinox@gmail.com     | Hailascoala123! | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.|
+    | annapecorino4055@gmail.com | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.|
+    | anapecorinox@gmail.com     | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.|
 
   Scenario Outline: Check that we can not login into the application when providing incorrect credentials
     When I insert email "<email>" and password "<password>"
