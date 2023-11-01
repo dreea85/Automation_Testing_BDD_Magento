@@ -21,17 +21,9 @@ class LoginPage(BasePage):
         email = self.find(self.INPUT_EMAIL)
         email.send_keys("annapecorino4055@gmail.com")
 
-    # def set_wrong_email(self):
-    #     email = self.find(self.INPUT_EMAIL)
-    #     email.send_keys("anapecorinox@gmail.com")
-
     def set_password(self):
         password = self.find(self.INPUT_PASSWORD)
         password.send_keys("Hailascoala123!")
-
-    # def set_wrong_password(self):
-    #     password = self.find(self.INPUT_PASSWORD)
-    #     password.send_keys("123!")
 
     def click_login_button(self):
         self.find(self.BUTTON_LOGIN).click()
@@ -49,7 +41,7 @@ class LoginPage(BasePage):
             password_element.send_keys(password)
 
     def check_error_msg(self, error_message):
-        WebDriverWait(self.browser, 7).until(
+        WebDriverWait(self.browser, 10).until(
             EC.visibility_of_element_located(self.ERROR_MESSAGE)
         )
 
