@@ -1,4 +1,5 @@
 Instrucțiuni de instalare
+
 Instalarea Python și PIP
 
 Asigurați-vă că aveți Python și PIP instalate pe sistemul dvs. Dacă nu, le puteți descărca și instala de la python.org.
