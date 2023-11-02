@@ -7,7 +7,7 @@ Feature: Test the functionality of the login page
     Then I can login into the application and see the user's account page
     And the user logs out
 
-  Scenario Outline: Check that we can not login into the application when providing incorrect credentials
+  Scenario Outline: Verify login failure with detailed error message for incorrect credentials
     When I insert email "<email>" and password "<password>"
     And I click on the login button
     Then the message "<error_message>" is displayed
@@ -17,7 +17,7 @@ Feature: Test the functionality of the login page
     | annapecorino4055@gmail.com | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.|
     | anapecorinox@gmail.com     | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.|
 
-  Scenario Outline: Check that we can not login into the application when providing incorrect credentials
+  Scenario Outline: Verify login failure with short error message for incorrect credentials
     When I insert email "<email>" and password "<password>"
     And I click on the login button
     Then a short message "<error_message_short>" is displayed
