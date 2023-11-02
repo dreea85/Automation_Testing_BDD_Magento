@@ -5,12 +5,16 @@ Instalarea Python și PIP
 Asigurați-vă că aveți Python și PIP instalate pe sistemul dvs. Dacă nu, le puteți descărca și instala de la python.org.
 După instalare verificați versiunile: python --version și pip --version.
 
+![versiuni](/images/versiuni.png)
 
 
 Clonarea proiectului de pe GitHub
 
 Deschideți terminalul și navigați la directorul în care doriți să clonați proiectul.
 Executați comanda ”git clone https://github.com/dreea85/SoftwareTestingBoard.git”.
+
+![clonare](/images/clonare.png)
+
 
 Instalarea dependențelor
 
@@ -22,8 +26,7 @@ Configurarea IDE
 Deschideți proiectul în PyCharm sau orice alt IDE preferați.
 Verificați setările de proiect pentru a vă asigura că sunt corecte (de exemplu, interpreter Python, setările de mediu).
 
-
-
+![interpreter](/images/python_interpreter.png)
 
 Instalarea WebDriver
 
@@ -38,6 +41,8 @@ Rularea testelor
 
 Executați comanda behave pentru a începe rularea testelor BDD.
 
+![behave](/images/behave.png)
+
 
 Verificarea raportului
 
@@ -46,6 +51,15 @@ După finalizarea testelor, verificați raportul HTML generat pentru rezultate.
 Analiza rezultatelor
 
 Testele care au trecut sunt semnalate cu verde.
+
+![success](/images/test_success.png)
+
+![success](/images/raport_success.png)
+
 Testele care nu au trecut sunt semnalate cu roșu, iar în terminal sunt marcate cu ”failed”.
+
+![failed](/images/test_failed.png)
+
+![failed](/images/raport_failed.png)
 
 
