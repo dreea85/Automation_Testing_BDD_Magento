@@ -7,6 +7,7 @@ Feature: Test the functionality of the login page
     Then I can login into the application and see the user's account page
     And the user logs out
 
+
   Scenario Outline: Verify login failure with detailed error message for incorrect credentials
     When I insert email "<email>" and password "<password>"
     And I click on the login button
@@ -20,7 +21,7 @@ Feature: Test the functionality of the login page
   Scenario Outline: Verify login failure with short error message for incorrect credentials
     When I insert email "<email>" and password "<password>"
     And I click on the login button
-    Then a short message "<error_message_short>" is displayed
+    Then the short message "<error_message_short>" is displayed
   Examples:
     | email                      | password        | error_message_short       |
     | annapecorino4055@gmail.com | None            | This is a required field. |
@@ -29,3 +30,24 @@ Feature: Test the functionality of the login page
     | None                       | Hailascoala123! | This is a required field. |
     | None                       | 123!            | This is a required field. |
     | None                       | None            | This is a required field. |
+
+  Scenario Outline: Login Unsuccessful with Invalid Email Format and Password correct/incorrect
+    When I insert email "<email>" and password "<password>"
+    And I click on the login button
+    Then the message "<invalid_email_message>" is displayed below the email field
+
+  Examples:
+    |email             | password        | invalid_email_message                                        |
+    |annapecorino4055  | Hailascoala123! | Please enter a valid email address (Ex: johndoe@domain.com). |
+    |annapecorino4055  | 123!            | Please enter a valid email address (Ex: johndoe@domain.com). |
+
+
+  Scenario Outline: Login Unsuccessful with Invalid Email Format and Password None
+    When I insert email "<email>" and password "<password>"
+    And I click on the login button
+    Then the message "<invalid_email_message>" is displayed below the email field
+    And the short message "<error_message_short>" is displayed
+
+    Examples:
+    |email             | password  | invalid_email_message                                        | error_message_short       |
+    |annapecorino4055  | None      | Please enter a valid email address (Ex: johndoe@domain.com). | This is a required field. |

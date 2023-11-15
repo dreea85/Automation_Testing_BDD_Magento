@@ -13,6 +13,7 @@ class LoginPage(BasePage):
     ERROR_MESSAGE_SHORT = (By.XPATH, '//div[contains(text(),"This is a required field.")]')
     DROPDOWN = (By.XPATH, '(//button[@data-action="customer-menu-toggle"])[1]')
     LOGOUT_BUTTON = (By.XPATH, '(// a[contains(text(), "Sign Out")])[1]')
+    INVALID_EMAIL_MSG = (By.CSS_SELECTOR, "div#email-error")
 
     def navigate_to_login_page(self):
         self.browser.get(self.BASE_URL)
@@ -39,6 +40,16 @@ class LoginPage(BasePage):
             password_element = self.find(self.INPUT_PASSWORD)
             password_element.clear()  # Clear the input field
             password_element.send_keys(password)
+
+    def check_invalid_email_message(self, invalid_email_message):
+        WebDriverWait(self.browser, 10).until(
+            EC.visibility_of_element_located(self.INVALID_EMAIL_MSG)
+        )
+        expected_error = invalid_email_message
+        actual_error = self.find(self.INVALID_EMAIL_MSG).text
+        print(f"Expected_error: {expected_error}")
+        print(f"Actual_error: {actual_error}")
+        assert expected_error == actual_error
 
     def check_error_msg(self, error_message):
         WebDriverWait(self.browser, 10).until(
