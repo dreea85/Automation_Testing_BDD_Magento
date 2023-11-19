@@ -1,4 +1,4 @@
-Feature: Test the functionality of the login page
+Feature: Test the functionality of the login page and forgot password page
   Background:
     Given I am on the testing board login page
   Scenario: Login Successful when using correct email and correct password
@@ -6,7 +6,6 @@ Feature: Test the functionality of the login page
     And I click on the login button
     Then I can login into the application and see the user's account page
     And the user logs out
-
 
   Scenario Outline: Verify login failure with detailed error message for incorrect credentials
     When I insert email "<email>" and password "<password>"
@@ -17,6 +16,7 @@ Feature: Test the functionality of the login page
     | anapecorinox@gmail.com     | Hailascoala123! | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.|
     | annapecorino4055@gmail.com | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.|
     | anapecorinox@gmail.com     | 123!            | The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.|
+
 
   Scenario Outline: Verify login failure with short error message for incorrect credentials
     When I insert email "<email>" and password "<password>"
@@ -48,6 +48,37 @@ Feature: Test the functionality of the login page
     Then the message "<invalid_email_message>" is displayed below the email field
     And the short message "<error_message_short>" is displayed
 
-    Examples:
+  Examples:
     |email             | password  | invalid_email_message                                        | error_message_short       |
     |annapecorino4055  | None      | Please enter a valid email address (Ex: johndoe@domain.com). | This is a required field. |
+
+
+
+  Scenario: Requesting password reset
+    When I click on "Forgot Your Password?"
+    And I am redirected to another page
+    And I enter an email address
+    And I submit the password reset request
+    Then I should return to the login page
+    And see the message that the email to reset the password was sent
+
+
+  Scenario Outline: Attempting to reset the password with an invalid email address
+    When I click on "Forgot Your Password?"
+    And I am redirected to another page
+    And I enter an invalid email format "<email>"
+    And I submit the password reset request
+    Then I should see an error message "<message_invalid_email>"
+
+  Examples:
+    |email             | message_invalid_email                                         |
+    |annapecorino4055  | Please enter a valid email address (Ex: johndoe@domain.com).  |
+    |None              | This is a required field.                                     |
+
+
+
+  Scenario: Canceling the password reset request
+    When I click on "Forgot Your Password?"
+    And I am redirected to another page
+    And I enter an email address
+    Then I decide to cancel the request by going back to the previous page

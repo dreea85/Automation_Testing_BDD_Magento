@@ -14,3 +14,7 @@ class BasePage(Browser):
 
     def get_text(self, locator):
         return self.find(locator).text
+
+    def go_back(self):
+        self.browser.back()
+
