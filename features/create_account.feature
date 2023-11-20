@@ -9,20 +9,27 @@ Feature: Test the functionality of the create an account page
     Then I should be redirected to the account confirmation page
     And the user successfully logs out
 
-#
+
 #  Scenario: Attempting to create an account with an existing email
 #    When I click on "Create an Account" button
 #    Then I am redirected to the registration page
 #    When I fill in the registration form with an email that is already in use
 #    And I submit the form
 #    Then I should see an error message indicating the email is already registered
-#
-#  Scenario Outline: Attempting to create an account with invalid data
-#    When I click on "Create an Account" button
-#    Then I am redirected to the registration page
-#    When I fill in the registration form with invalid data "<first_name>", "<last_name>", "<email>", "<password>", "<confirm_pass>"
-#    And I submit the form
-#    Then I should see error messages "<account_creation_error_messages>" indicating the invalid fields
-#
-#  Examples:
-#    |first_name  |  last_name | email  |  password  | confirm_pass | account_creation_error_messages    |
+
+  Scenario: Attempting to create an account with invalid data
+    When I click on "Create an Account" button
+    Then I am redirected to the registration page
+    When I attempt to create accounts with the following data
+      | first_name | last_name | email                 | password      | confirm_pass  |
+      | Dave       | Stan      | davestan123@gmail.com | 1q2w3e!       | 1q2w3e!       |
+      | Dave       | Stan      | davestan123@gmail.com | Vineiarna123! | Vineiarna123  |
+      | Dave       | Stan      | davestan123@gmail     | Vineiarna123! | Vineiarna123! |
+      | Dave       | Stan      | davestan123@gmail     | Vineiarna123! | Vineiarna123  |
+      | Dave       | Stan      | davestan123@gmail     | 1q2w3e!       | 1q2w3e!       |
+      | Dave       | Stan      | None                  | 1q2w3e!       | 1q2w3e!       |
+      | Dave       | Stan      | davestan123@gmail     | None          | 1q2w3e!       |
+      | Dave       | Stan      | davestan123@gmail     | 1q2w3e!       | None          |
+
+    And I submit the form
+    Then I should see appropriate error messages

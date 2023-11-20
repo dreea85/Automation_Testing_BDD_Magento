@@ -1,5 +1,7 @@
 from behave import *
 
+from pages.create_account_page import CreateAccountPage
+
 
 @when('I click on "Create an Account" button')
 def step_impl(context):
@@ -30,3 +32,36 @@ def step_impl(context):
 @then("the user successfully logs out")
 def step_impl(context):
     context.create_account_obj.button_logout_from_my_account()
+
+
+@when('I attempt to create accounts with the following data')
+def step_impl(context):
+    for row in context.table:
+        context.create_account_obj.clear_registration_form()
+        first_name = row['first_name']
+        last_name = row['last_name']
+        email = row['email']
+        password = row['password']
+        confirm_pass = row['confirm_pass']
+        context.create_account_obj.fill_registration_form(first_name, last_name, email, password, confirm_pass)
+        context.create_account_obj.click_create_account_registration_button()
+
+        # Reset the form for the next iteration, if necessary
+
+@then('I should see appropriate error messages')
+def step_impl(context):
+    expected_errors = {
+        CreateAccountPage.PASSWORD_MESSAGES: [
+            "Minimum length of this field must be equal or greater than 8 symbols. Leading and trailing spaces will be ignored.",
+            "This is a required field."
+            ],
+        CreateAccountPage.PASSWORD_CONFIRMATION_MESSAGES: [
+            "Please enter the same value again.",
+            "This is a required field."
+            ],
+        CreateAccountPage.EMAIL_MESSAGES: [
+            "Please enter a valid email address (Ex: johndoe@domain.com).",
+            "This is a required field."
+            ]
+    }
+    context.create_account_obj.verify_error_messages(expected_errors)
