@@ -10,12 +10,17 @@ Feature: Test the functionality of the create an account page
     And the user successfully logs out
 
 
-#  Scenario: Attempting to create an account with an existing email
-#    When I click on "Create an Account" button
-#    Then I am redirected to the registration page
-#    When I fill in the registration form with an email that is already in use
-#    And I submit the form
-#    Then I should see an error message indicating the email is already registered
+  Scenario Outline: Attempting to create an account with an existing email
+    When I click on "Create an Account" button
+    Then I am redirected to the registration page
+    When I fill in the registration form with an email that is already in use: "<first_name>", "<last_name>", "<email>", "<password>", "<confirm_pass>"
+    And I submit the form
+    Then I should see an error message "<message>" indicating the email is already registered
+
+  Examples:
+    | first_name | last_name | email                      | password        | confirm_pass    | message                                                                                                                                                      |
+    | Anna       | Pecorino  | annapecorino4055@gmail.com | Hailascoala123! | Hailascoala123! | There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account. |
+
 
   Scenario: Attempting to create an account with invalid data
     When I click on "Create an Account" button

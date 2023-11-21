@@ -22,6 +22,7 @@ class CreateAccountPage(BasePage):
     PASSWORD_MESSAGES = (By.CSS_SELECTOR, 'div.mage-error#password-error')
     PASSWORD_CONFIRMATION_MESSAGES = (By.CSS_SELECTOR, 'div.mage-error#password-confirmation-error')
     EMAIL_MESSAGES = (By.CSS_SELECTOR, 'div.mage-error#email_address-error')
+    MESSAGE_FOR_EMAIL_EXISTS_ALREADY = (By.CSS_SELECTOR, 'div[data-bind="html: $parent.prepareMessageForHtml(message.text)"]')
 
 
     def check_current_url(self):
@@ -119,3 +120,13 @@ class CreateAccountPage(BasePage):
             if not any(expected_message in actual_message for expected_message in expected_messages):
                 expected_msg_str = "', '".join(expected_messages)
                 assert False, f"None of the expected messages '{expected_msg_str}' found. Actual message: '{actual_message}'"
+
+    def check_error_message(self, message):
+        WebDriverWait(self.browser, 10).until(
+            EC.visibility_of_element_located(self.MESSAGE_FOR_EMAIL_EXISTS_ALREADY)
+        )
+        expected_error = message
+        actual_error = self.find(self.MESSAGE_FOR_EMAIL_EXISTS_ALREADY).text
+        print(f"Expected_error: {expected_error}")
+        print(f"Actual_error: {actual_error}")
+        assert expected_error == actual_error

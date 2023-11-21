@@ -65,3 +65,11 @@ def step_impl(context):
             ]
     }
     context.create_account_obj.verify_error_messages(expected_errors)
+
+@when('I fill in the registration form with an email that is already in use: "{first_name}", "{last_name}", "{email}", "{password}", "{confirm_pass}"')
+def step_impl(context, first_name, last_name, email, password, confirm_pass):
+    context.create_account_obj.fill_registration_form(first_name, last_name, email, password, confirm_pass)
+
+@then('I should see an error message "{message}" indicating the email is already registered')
+def step_impl(context, message):
+    context.create_account_obj.check_error_message(message)
